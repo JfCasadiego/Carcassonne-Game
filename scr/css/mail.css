@@ -83,13 +83,20 @@ main{
     width: 100%;
     display: grid;
     grid-template-columns: repeat(11,1fr);
-    grid-template-rows: repeat(11,1fr);
-    
+    grid-template-rows: repeat(11,1fr);   
 
 }
 .game-field .box{
     border: 1px dotted black;
+    transition: all 0.5s ease;
 }
+
+.game-field .box:hover{
+   background-color: green;
+   
+}
+
+
 .game-ui{
     background-color: rgba(17, 223, 223, 0.404);
     height: 10%;
@@ -107,7 +114,21 @@ main{
     display: flex;
     align-items:start;
     justify-content: center;
+
 }
+.cementery {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+
+.cementery p{
+    text-align: center;
+    color: var(--fontColor);
+}
+
+
+
 .card-zone{
     width: 60%;
     height: 100%;
@@ -145,8 +166,7 @@ main{
 }
 
 
-.deck-zone .card:hover{
-    background-color: rgb(76, 184, 14);
+.deck-zone .card:hover{    
     transform: translateY(-15%);
     text-align: center;
 }
