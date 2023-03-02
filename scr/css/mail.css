@@ -50,7 +50,6 @@ main{
     color: var(--fontColor);
     font-size: 2rem;
     text-decoration: none;
-
 }
 
 /*-----------------------------------------------Game-Window----------------------------------------*/
@@ -82,10 +81,11 @@ main{
     height: 90%;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(11,1fr);
-    grid-template-rows: repeat(11,1fr);   
+    grid-template-columns: repeat(5,1fr);
+    grid-template-rows: repeat(5,1fr);   
 
 }
+
 .game-field .box{
     border: 1px dotted black;
     transition: all 0.5s ease;
@@ -95,6 +95,11 @@ main{
    background-color: green;
    
 }
+
+.Activehover{
+    background-color: rgb(22, 244, 236);
+}
+
 
 
 .game-ui{
@@ -127,15 +132,15 @@ main{
     color: var(--fontColor);
 }
 
-
-
 .card-zone{
     width: 60%;
     height: 100%;
-    background-color: rgb(18, 182, 18);
+    background-color: rgb(21, 188, 21);
+    
     display: flex;
     align-items: start;
     justify-content: center;
+    
 }
 .deck-zone{
     width: 20%;
@@ -147,11 +152,22 @@ main{
 }
 
 .card{
-    background-color: gray;
+    background-color: rgb(236, 168, 8);
     border-radius: 10px;
     margin: 5px;
     width: 120px;
     height: 120px;
+    transition: all 0.5s ease;
+    cursor: pointer;
+   
+    
+}
+
+.cardsPlace{
+    background-color: gray;
+    border-radius: 10px;    
+    width: 100%;
+    height: 100%;
     transition: all 0.5s ease;
     cursor: pointer;
 }
@@ -181,8 +197,6 @@ main{
     color: white;
     text-align: center;
 }
-
-
 
 footer{
     height: 5%;
