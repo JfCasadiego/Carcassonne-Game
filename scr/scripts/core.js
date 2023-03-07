@@ -1,6 +1,8 @@
+/*------------------------Modulos importados-----------------------------------*/
+
 /*--------------------------Variables generales ------------------------------*/
 var dragEnable = true;
-var discarCount =1;
+var discarCount =0;
 
 /*-------------------------selectores de Dom----------------------------------*/
 const newCardTurn = document.querySelector(".newCard");
@@ -8,14 +10,18 @@ const discartCart = document.querySelector(".cementery");
 const boxes = document.querySelectorAll(".box");
 const cards = document.querySelectorAll('.cards');
 const deckZone = document.querySelector(".card-zone")
+const box = document.querySelector(".game-field .box");
+const gameGrid = document.querySelector(".game-field");
 
-
-/*-------------------Configuraciones para drag and drop-----------------------*/
-function dragstart(){ 
+/*----------------Configuraciones para drag and drop carta en movimiento--------------------*/
+function dragstart(e){ 
     this.className+=" activo";   
+    verificarAdyacentes()
+    
 };
 
-function dragDropCard(){ 
+function dragDropCard(e){    
+
     if(this.parentNode.className != "card-zone" ){
         this.className="cardsPlace";
         this.draggable=false;
@@ -23,34 +29,44 @@ function dragDropCard(){
     }        
     if(this.parentNode.className === "card-zone" ){
         this.className="cards card"
-    };       
+    };   
+
+    eraseAviableSpaces()
 };
 
-function dragover(e){
-    e.preventDefault();    
+/*-----------Configuraciones para drag and drop carta para las casillas del trablero----------*/
+
+function dragover(ActualElement){
+    ActualElement.preventDefault();    
 };
 
-function dragenter(e){
-    e.preventDefault();    
-    this.className += " Activehover";
-};
+function dragenter(ActualElement){
+    ActualElement.preventDefault(); 
+    
+ };
 
 function dragleave(){    
-    this.className ="box";    
+    if(this.className !="spaceAviable"){
+        this.className ="box";    
+    }
 };
 
-function drop(){
+function drop(ActualElement){
     const fichaSeleccionada = document.querySelector(".cards.activo");
-    this.className="box";
-    
+    this.className="box";    
     if(dragEnable === true){
         this.appendChild(fichaSeleccionada);
         dragEnable=false;
         console.log(dragEnable)
+        updateMatriz(ActualElement)
     }
-
 }
+
+
+    
+
 /*----------------funciones para generar carta y nuevo turno-----------------*/
+
 function newTurn(){    
     const newCardDrag = document.createElement("div");
     newCardDrag.className="cards card"
@@ -77,27 +93,30 @@ function discartHand(){
     for(let i=1;i<=4;i++){
         newTurn();
     }
-    dragEnable=true;    
+    dragEnable=true;  
+    console.log("Deck descartado")  
 };
-
-
-
-
-
-/*----------------------------------------------------------------------------*/
-function cardfunctions(){
-
-    cards.forEach(card => {     
-        card.addEventListener("dragstart", dragstart);  
-        card.addEventListener("dragend", dragDropCard);  
-          
-    });
+/*---------------------------funciones de inicio------------------------------------------*/
+function newGame(){
+    let handRemove = document.querySelectorAll(".card-zone .cards")
     
+    boxListeners()
+
+    for(let i=1;i<=4;i++){
+        newTurn();
+    }
+
+    discarCount=0
+    dragEnable=true; 
+}
+function boxListeners(){
+
     boxes.forEach(box => {
         box.addEventListener("dragover", dragover)
         box.addEventListener("dragenter", dragenter)
         box.addEventListener("dragleave", dragleave)
         box.addEventListener("drop", drop)
+        
     });
 }
 
@@ -128,32 +147,27 @@ newCardTurn.addEventListener("mouseleave",function(e){
     text.innerHTML="";
 })
 
-
 newCardTurn.addEventListener("click",e=>{
     if(dragEnable===false){        
         newTurn();
-        enableDrag();
-        cardfunctions();
+        enableDrag();        
     }    
 })
 
 discartCart.addEventListener("click",(e)=>{
-    
+
     if(discarCount>=5){
         discartHand();
         discarCount=1;
-    }
-    
-
-
-    
+    }    
 })
 
 
 
 
+ /*---------------------------iniciador de juego-------------------------------------*/
+newGame();
+
+
+
  
-cardfunctions();
-
-
-

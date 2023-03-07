@@ -82,13 +82,15 @@ main{
     width: 100%;
     display: grid;
     grid-template-columns: repeat(5,1fr);
-    grid-template-rows: repeat(5,1fr);   
+    grid-template-rows: repeat(5,1fr); 
+    position: relative;  
 
 }
 
-.game-field .box{
+.game-field .box{    
     border: 1px dotted black;
     transition: all 0.5s ease;
+    
 }
 
 .game-field .box:hover{
@@ -96,10 +98,20 @@ main{
    
 }
 
-.Activehover{
+.Activehover{ /*esta class */
     background-color: rgb(22, 244, 236);
 }
 
+.spaceAviable{
+    border: 1px dotted black;
+    animation: parpadeo 1s ease-in-out infinite;
+    
+}
+@keyframes parpadeo {
+    0%{background-color:rgba(40, 5, 240, 0.432);} 
+    50%{background-color:  rgba(255, 255, 255, 0.212);}      
+    100%{background-color:  rgba(40, 5, 240, 0.432);} 
+}
 
 
 .game-ui{
