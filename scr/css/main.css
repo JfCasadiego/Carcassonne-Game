@@ -54,7 +54,7 @@ main{
 
 /*-----------------------------------------------Game-Window----------------------------------------*/
 
-.game-window{
+.game-window{    
     background-image: url(/scr/img/village1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -162,7 +162,7 @@ main{
     align-items: start;
     justify-content: center;
 }
-
+/*----------------------------------------------styling Cards------------------------------------------*/
 .card{
     background-color: rgb(236, 168, 8);
     border-radius: 10px;
@@ -203,6 +203,7 @@ main{
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(143deg, rgba(134,64,0,1) 8%, rgba(212,64,0,1) 51%, rgba(255,122,0,1) 92%);
     
 }
 .newCard p{

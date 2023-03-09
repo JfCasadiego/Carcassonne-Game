@@ -1,8 +1,6 @@
-/*------------------------Modulos importados-----------------------------------*/
-
 /*--------------------------Variables generales ------------------------------*/
-var dragEnable = true;
-var discarCount =0;
+let dragEnable = true;
+let discarCount =0;
 
 /*-------------------------selectores de Dom----------------------------------*/
 const newCardTurn = document.querySelector(".newCard");
@@ -16,8 +14,7 @@ const gameGrid = document.querySelector(".game-field");
 /*----------------Configuraciones para drag and drop carta en movimiento--------------------*/
 function dragstart(e){ 
     this.className+=" activo";   
-    verificarAdyacentes()
-    
+    //verificarAdyacentes()    
 };
 
 function dragDropCard(e){    
@@ -56,6 +53,7 @@ function drop(ActualElement){
     this.className="box";    
     if(dragEnable === true){
         this.appendChild(fichaSeleccionada);
+        this.style.pointerEvents="none";
         dragEnable=false;
         console.log(dragEnable)
         updateMatriz(ActualElement)
@@ -67,15 +65,21 @@ function drop(ActualElement){
 
 /*----------------funciones para generar carta y nuevo turno-----------------*/
 
-function newTurn(){    
+function newTurn(){  
     const newCardDrag = document.createElement("div");
+    
+    let objeto12=random1()   
+    const miroad = new objeto12;
+    
+    newCardDrag.style.backgroundImage= miroad.backgroundImage
     newCardDrag.className="cards card"
     newCardDrag.draggable=true;
-    newCardDrag.addEventListener("dragstart", dragstart);
+    newCardDrag.addEventListener("dragstart", miroad.movimento);
     newCardDrag.addEventListener("dragend", dragDropCard);
-    deckZone.appendChild(newCardDrag); 
-    discarCount += 1;
+   
+    deckZone.appendChild(newCardDrag);
 }
+
 function enableDrag(){
     dragEnable = true;
     console.log(dragEnable)
@@ -97,8 +101,7 @@ function discartHand(){
     console.log("Deck descartado")  
 };
 /*---------------------------funciones de inicio------------------------------------------*/
-function newGame(){
-    let handRemove = document.querySelectorAll(".card-zone .cards")
+function newGame(){    
     
     boxListeners()
 
@@ -136,15 +139,15 @@ discartCart.addEventListener("mouseleave",function(e){
 
 newCardTurn.addEventListener("mouseenter",function(e){
     const text = document.querySelector(".newCard p")
-    newCardTurn.style.backgroundColor="rgb(76, 184, 14)";
+    newCardTurn.style.background="rgb(76, 184, 14)";
     text.innerHTML="NUEVO <br/> TURNO";
     
 })   
  
 newCardTurn.addEventListener("mouseleave",function(e){
     const text = document.querySelector(".newCard p");
-    newCardTurn.style.backgroundColor="grey"
-    text.innerHTML="";
+    newCardTurn.style.backgroundCol= "linear-gradient(143deg, rgba(134,64,0,1) 8%, rgba(212,64,0,1) 51%, rgba(255,122,0,1) 92%)"
+    text.innerHTML="NUEVO <br/> TURNO";
 })
 
 newCardTurn.addEventListener("click",e=>{
@@ -170,4 +173,3 @@ newGame();
 
 
 
- 
