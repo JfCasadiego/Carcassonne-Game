@@ -67,29 +67,38 @@ main{
 
 .game-area{   
     display: flex;
-    flex-wrap: wrap;    
-    margin-top:10rem ;
-    border: 5px solid red;
-    background-color: rgba(255, 255, 255, 0.336);
-    height: 60%;
+    flex-wrap: wrap;       
+    align-items: center;
+    justify-content: center;
+    margin-top: 10%;
     width: 50%;
+    height: 65%;
+    border: 5px solid rgb(22, 225, 59);
+    background-color: rgba(72, 71, 83, 0.302);
+   
 }
 
 /*----------------------------------------------Game-Field------------------------------------------*/
 .game-field{
     background-color: rgba(255, 255, 255, 0.212);
-    height: 90%;
-    width: 100%;
-    display: grid;
+    height: auto;
+    width: auto;
+    display: grid;  
+    padding: 0; 
+    margin: 0; 
     grid-template-columns: repeat(5,1fr);
     grid-template-rows: repeat(5,1fr); 
-    position: relative;  
+   
 
 }
 
 .game-field .box{    
     border: 1px dotted black;
     transition: all 0.5s ease;
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+
     
 }
 
@@ -105,7 +114,10 @@ main{
 .spaceAviable{
     border: 1px dotted black;
     animation: parpadeo 1s ease-in-out infinite;
-    
+    overflow: hidden;
+    width: 75px;
+    height: 75px;  
+      
 }
 @keyframes parpadeo {
     0%{background-color:rgba(40, 5, 240, 0.432);} 
@@ -115,9 +127,10 @@ main{
 
 
 .game-ui{
-    background-color: rgba(17, 223, 223, 0.404);
-    height: 10%;
-    width: 100%;
+    background-color: rgba(17, 223, 223, 0.404);    
+    width:80%;
+    padding: 0; 
+    margin: 0; 
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
@@ -125,8 +138,8 @@ main{
 }
 
 .discard-zone{
-    width: 20%;
-    height: 100%;
+    width: auto;
+    height: auto;
     background-color: brown;
     display: flex;
     align-items:start;
@@ -145,18 +158,17 @@ main{
 }
 
 .card-zone{
-    width: 60%;
-    height: 100%;
+    width: 500px;
+    height: auto;
     background-color: rgb(21, 188, 21);
-    
     display: flex;
     align-items: start;
     justify-content: center;
     
 }
 .deck-zone{
-    width: 20%;
-    height: 100%;
+    width: auto;
+    height: auto;
     background-color: rgb(14, 43, 207);
     display: flex;
     align-items: start;
@@ -167,10 +179,13 @@ main{
     background-color: rgb(236, 168, 8);
     border-radius: 10px;
     margin: 5px;
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     transition: all 0.5s ease;
     cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
    
     
 }
@@ -182,6 +197,9 @@ main{
     height: 100%;
     transition: all 0.5s ease;
     cursor: pointer;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .card-zone .card:hover{

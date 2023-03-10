@@ -12,10 +12,6 @@ const box = document.querySelector(".game-field .box");
 const gameGrid = document.querySelector(".game-field");
 
 /*----------------Configuraciones para drag and drop carta en movimiento--------------------*/
-function dragstart(e){ 
-    this.className+=" activo";   
-    //verificarAdyacentes()    
-};
 
 function dragDropCard(e){    
 
@@ -50,8 +46,8 @@ function dragleave(){
 
 function drop(ActualElement){
     const fichaSeleccionada = document.querySelector(".cards.activo");
-    this.className="box";    
-    if(dragEnable === true){
+    //this.className="box";    
+    if(dragEnable === true && this.className==="spaceAviable"){
         this.appendChild(fichaSeleccionada);
         this.style.pointerEvents="none";
         dragEnable=false;
@@ -59,25 +55,30 @@ function drop(ActualElement){
         updateMatriz(ActualElement)
     }
 }
-
-
-    
+  
 
 /*----------------funciones para generar carta y nuevo turno-----------------*/
 
 function newTurn(){  
-    const newCardDrag = document.createElement("div");
+    const newCardDrag = document.createElement("div");    
+    const newObject=  newRandomPiece()
+    console.log(newObject)
+
+    const newInstanceObject = new newObject(newObject)
     
-    let objeto12=random1()   
-    const miroad = new objeto12;
-    
-    newCardDrag.style.backgroundImage= miroad.backgroundImage
+
+    newCardDrag.style.backgroundImage= newInstanceObject.backgroundImage
     newCardDrag.className="cards card"
     newCardDrag.draggable=true;
-    newCardDrag.addEventListener("dragstart", miroad.movimento);
+    newCardDrag.dataTipo= newInstanceObject.type 
+
+    //console.log(newCardDrag.dataTipo)
+
+    newCardDrag.addEventListener("dragstart", newInstanceObject.movimento);
     newCardDrag.addEventListener("dragend", dragDropCard);
    
     deckZone.appendChild(newCardDrag);
+    discarCount+=1
 }
 
 function enableDrag(){
@@ -158,7 +159,7 @@ newCardTurn.addEventListener("click",e=>{
 })
 
 discartCart.addEventListener("click",(e)=>{
-
+    
     if(discarCount>=5){
         discartHand();
         discarCount=1;
