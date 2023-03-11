@@ -1,6 +1,7 @@
 /*--------------------------Variables generales ------------------------------*/
 let dragEnable = true;
 let discarCount =0;
+let boxInsideCardType=""
 
 /*-------------------------selectores de Dom----------------------------------*/
 const newCardTurn = document.querySelector(".newCard");
@@ -10,6 +11,84 @@ const cards = document.querySelectorAll('.cards');
 const deckZone = document.querySelector(".card-zone")
 const box = document.querySelector(".game-field .box");
 const gameGrid = document.querySelector(".game-field");
+
+/*---------------------------funcion de inicio------------------------------------------*/
+function newGame(){    
+    
+    boxListeners()
+
+    for(let i=1;i<=4;i++){
+        newTurn();
+    }
+
+    discarCount=0
+    dragEnable=true; 
+}
+
+/*---------------------------funcion para agregar los enventos a las casillas del tablero----------------------------------*/
+function boxListeners(){
+
+    boxes.forEach(box => {
+        box.addEventListener("dragover", dragover)
+        box.addEventListener("dragenter", dragenter)
+        box.addEventListener("dragleave", dragleave)
+        box.addEventListener("drop", drop)
+        
+    });
+}
+
+/*----------------funciones para generar carta y nuevo turno-----------------*/
+
+function newTurn(){  
+
+    const newCardDrag = document.createElement("div");    
+    const newObject=  newRandomPiece()    
+    const newInstanceObject = new newObject    
+    
+    eventsCardConstructor(newCardDrag,newInstanceObject)
+    deckZone.appendChild(newCardDrag);
+    discarCount+=1
+    
+}
+/*----------------cosntruccion de los eventos de carta-----------------*/
+
+function eventsCardConstructor(newCardDrag,newInstanceObject){
+    newCardDrag.style.backgroundImage= newInstanceObject.backgroundImage
+    newCardDrag.className="cards card"
+    newCardDrag.draggable=true;   
+    newCardDrag.setAttribute('data-type', newInstanceObject.name())
+    newCardDrag.addEventListener("dragstart", newInstanceObject.movimento);
+    newCardDrag.addEventListener("dragend", dragDropCard);   
+    newCardDrag.addEventListener("click", (e)=>{        
+        newCardDrag.style.transform = `rotate(${newInstanceObject.rotate()}deg)`          
+    });
+    
+    
+}
+
+
+
+
+/*----------------funcion para permitir el drag en las tarjetas-----------------*/
+
+function enableDrag(){
+    dragEnable = true;
+};     
+
+/*----------------------------funciones para descartar la mano-------------------*/
+
+function discartHand(){
+    let handRemove = document.querySelectorAll(".card-zone .cards")
+   
+    handRemove.forEach(card => card.remove());   
+    
+    for(let i=1;i<=4;i++){
+        newTurn();
+    }
+    dragEnable=true;  
+    console.log("Deck descartado")  
+};
+
 
 /*----------------Configuraciones para drag and drop carta en movimiento--------------------*/
 
@@ -22,12 +101,14 @@ function dragDropCard(e){
     }        
     if(this.parentNode.className === "card-zone" ){
         this.className="cards card"
-    };   
+    }; 
+    
+    
 
     eraseAviableSpaces()
 };
 
-/*-----------Configuraciones para drag and drop carta para las casillas del trablero----------*/
+/*-----------Configuraciones para drag and drop para las casillas del trablero----------*/
 
 function dragover(ActualElement){
     ActualElement.preventDefault();    
@@ -48,81 +129,16 @@ function drop(ActualElement){
     const fichaSeleccionada = document.querySelector(".cards.activo");
     //this.className="box";    
     if(dragEnable === true && this.className==="spaceAviable"){
+        this.setAttribute('data-type',fichaSeleccionada.getAttribute("data-type"))
         this.appendChild(fichaSeleccionada);
         this.style.pointerEvents="none";
-        dragEnable=false;
-        console.log(dragEnable)
+        dragEnable=false;        
         updateMatriz(ActualElement)
     }
 }
   
 
-/*----------------funciones para generar carta y nuevo turno-----------------*/
 
-function newTurn(){  
-    const newCardDrag = document.createElement("div");    
-    const newObject=  newRandomPiece()
-    console.log(newObject)
-
-    const newInstanceObject = new newObject(newObject)
-    
-
-    newCardDrag.style.backgroundImage= newInstanceObject.backgroundImage
-    newCardDrag.className="cards card"
-    newCardDrag.draggable=true;
-    newCardDrag.dataTipo= newInstanceObject.type 
-
-    //console.log(newCardDrag.dataTipo)
-
-    newCardDrag.addEventListener("dragstart", newInstanceObject.movimento);
-    newCardDrag.addEventListener("dragend", dragDropCard);
-   
-    deckZone.appendChild(newCardDrag);
-    discarCount+=1
-}
-
-function enableDrag(){
-    dragEnable = true;
-    console.log(dragEnable)
-
-
-};     
-
-/*----------------------------funciones para descartar la mano-------------------*/
-
-function discartHand(){
-    let handRemove = document.querySelectorAll(".card-zone .cards")
-   
-    handRemove.forEach(card => card.remove());   
-    
-    for(let i=1;i<=4;i++){
-        newTurn();
-    }
-    dragEnable=true;  
-    console.log("Deck descartado")  
-};
-/*---------------------------funciones de inicio------------------------------------------*/
-function newGame(){    
-    
-    boxListeners()
-
-    for(let i=1;i<=4;i++){
-        newTurn();
-    }
-
-    discarCount=0
-    dragEnable=true; 
-}
-function boxListeners(){
-
-    boxes.forEach(box => {
-        box.addEventListener("dragover", dragover)
-        box.addEventListener("dragenter", dragenter)
-        box.addEventListener("dragleave", dragleave)
-        box.addEventListener("drop", drop)
-        
-    });
-}
 
 
 /*----------------------------Zona de listeners--------------------------------*/

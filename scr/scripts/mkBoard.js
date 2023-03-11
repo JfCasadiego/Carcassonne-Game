@@ -4,7 +4,7 @@
 
 /*------------------------ constructor del tablero y matriz de juego----------------------------------*/
 
-function makeBoardGame(size,row,colums){
+function makeBoardGame(row,colums){
     const sizeBoard= document.getElementById("game")
     sizeBoard.style.gridTemplateColumns=`repeat(${colums},1fr)`;
     sizeBoard.style.gridTemplateRows=`repeat(${row},1fr)`;    
@@ -15,8 +15,31 @@ function makeBoardGame(size,row,colums){
         for(let j=0;j<=colums-1;j++){ 
         sizeBoard.innerHTML += `<div class="box" id="${i}-${j}"></div>` 
         }
-    }   
-}
+    }  
+    
+    placeCardInGridCenter(row,colums)
+    
+};
+
+function placeCardInGridCenter(row,colums){
+
+    const newCardDrag = document.createElement("div");  
+    const centralrow = Math.floor(row/2);
+    const centralcolums = Math.floor(colums/2);
+
+
+
+    newCardDrag.style.backgroundColor="red" 
+    newCardDrag.className="cardsPlace"
+    idAdyacentSelector(centralrow,centralcolums).setAttribute('data-type', 'RoadHV')
+    
+    idAdyacentSelector(centralrow,centralcolums).appendChild(newCardDrag)
+    GameMatriz[centralrow][centralcolums]=1
+
+
+};
+
+
 function gameMkMatriz(posicion_x,posicion_y){
         
     for(let i=0; i<=posicion_x-1; i++){
@@ -42,7 +65,7 @@ function gameMkMatriz(posicion_x,posicion_y){
     }
 
 /* ---------Funcion para comprobar casillas adyacentes aun posición en la matriz del juego-----------------*/
-
+/*
 function verificarAdyacentes(){
 
     for(let fila = 0; fila <= GameMatriz.length-1;fila++){
@@ -67,7 +90,7 @@ function verificarAdyacentes(){
             
         }
     }    
-}
+}*/
 
 function eraseAviableSpaces(){
     for(let fila = 0; fila <= GameMatriz.length-1;fila++){        
@@ -90,6 +113,10 @@ function idAdyacentSelector(fila,columna){
 };
 
 
+
 /*---------------------funciones para inteaccion de matriz del juego------------------------*/
 
-makeBoardGame(121,11,11);
+makeBoardGame(11,11);
+
+//console.log(idAdyacentSelector(5,5).getAttribute('data-type'))
+

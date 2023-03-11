@@ -9,7 +9,7 @@ function newRandomPiece(){
 
 class Town{
     constructor(type){
-      this.type= type;
+      this.type= "Town";
       this.backgroundImage ="url(/scr/img/pueblo.jpg)";             
     }
     movimento(){        
@@ -34,59 +34,77 @@ class Town{
           }
       } 
   }
+
+  name = () =>{
+    return this.type
+}
+
   }
 
 
-  class Road{
+class Road{
 
-    constructor(type){
-        this.type=type
-        this.backgroundImage ="url(/scr/img/road.jpg)";          
+    constructor(){
+        this.type="RoadHV"
+        this.backgroundImage ="url(/scr/img/road.jpg)";
+        this.rotation = 0          
     }   
     movimento(){
     
-    this.className+=" activo"    
+    this.className+=" activo" 
+    console.log(this.style.transform)
+
     for(let fila = 0; fila <= GameMatriz.length-1;fila++){
         for(let columna =0; columna <= GameMatriz[fila].length-1;columna++){
-            if(GameMatriz[fila][columna]!=0){
-                
-                if(this.dataTipo==="RoadH"){                    
+
+            if(GameMatriz[fila][columna]!=0 && idAdyacentSelector(fila,columna).getAttribute('data-type')=="RoadHV"){ 
+
+                if(this.style.transform ==""||this.style.transform =="rotate(0deg)"){
+
                     if (columna < GameMatriz[0].length - 1 && GameMatriz[fila][columna+1]!=1) { //derecha                  
-                        idAdyacentSelector(fila,columna+1).className ="spaceAviable"; 
-                        }
-                            
+                        idAdyacentSelector(fila,columna+1).className ="spaceAviable";       
                     };
+
                     if (columna > 0 && GameMatriz[fila][columna-1]!=1) {  //izquierda
                         idAdyacentSelector(fila,columna-1).className ="spaceAviable";  
-                }             
-                
-                
-                
-               /* 
-                if (fila > 0){ //arriba                  
-                    idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
-                }                
-                if (columna > 0){  //izquierda
-                    idAdyacentSelector(fila,columna-1).className ="spaceAviable";      
-                }
-                if (columna < GameMatriz[0].length - 1) { //derecha                  
-                    idAdyacentSelector(fila,columna+1).className ="spaceAviable";     
-                }    
-                if (fila < GameMatriz.length - 1) { //abajo
-                    idAdyacentSelector(fila+1,columna).className ="spaceAviable";
-                    */           
-                }
-            }                
+                    }; 
+
+                }else if(this.style.transform =="rotate(90deg)"){
+
+                    if (fila > 0){ //arriba                   
+                        idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
+                    }
+
+                    if (fila < GameMatriz.length - 1) { //abajo
+                        idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
+                    }  
+                }                    
+            }                    
         }
-    } 
+    }                
 }
+
+    rotate = () => {
+        this.rotation += 90;
+        if(this.rotation>90){
+            this.rotation =0
+        }
+        return this.rotation
+    }
+
+    name = () =>{
+        return this.type
+    }
+   
+} 
+
 
 
 
 class Abbey{
 
     constructor(type){
-      this.type= type;
+      this.type= "Abbey";
       this.backgroundImage =`url(/scr/img/abbey.jpg)`;          
     }
     movimento(){
@@ -110,6 +128,10 @@ class Abbey{
           }
       } 
   }
+
+  name = () =>{
+    return this.type
+}
   }
 
 
@@ -124,3 +146,4 @@ newCardDrag.addEventListener("dragend", dragDropCard);
 newCardDrag.appendChild(miroad)
 deckZone.appendChild(newCardDrag);
 */
+
