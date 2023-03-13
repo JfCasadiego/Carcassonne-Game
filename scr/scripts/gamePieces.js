@@ -5,7 +5,7 @@
 /*------------------------variables generales del tablero de juego---------------------------*/
 
 function newRandomPiece(){
-    const piezas =[Road,Road,Road,Road,Road,Road,Town,Town,Town,Abbey]
+    const piezas =[Road,Curve,Curve,Curve,FourCorner,Road,Town,Town,Town,Abbey]
     pieceClass = Math.floor(Math.random()*10);    
     return piezas[pieceClass];
 }
@@ -17,35 +17,75 @@ class Town{
       this.type= "Town";
       this.backgroundImage ="url(/scr/img/pueblo.jpg)";             
     }
-    movimento(){        
-    this.className+=" activo"  
+    movimento(){
+        this.className+=" activo"
+        for(let fila = 0; fila <= GameMatriz.length-1;fila++){
+            for(let columna =0; columna <= GameMatriz[fila].length-1;columna++){
+                if(GameMatriz[fila][columna]!=0){
+                    if (fila > 0 && GameMatriz[fila-1][columna]!=1){ //arriba                   
+                        idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
+                    }                
+                    if (columna > 0 && GameMatriz[fila][columna-1]!=1){  //izquierda
+                        idAdyacentSelector(fila,columna-1).className ="spaceAviable";      
+                    }
+                    if (columna < GameMatriz[0].length - 1 && GameMatriz[fila][columna+1]!=1) { //derecha                  
+                        idAdyacentSelector(fila,columna+1).className ="spaceAviable";     
+                    }    
+                    if (fila < GameMatriz.length - 1 && GameMatriz[fila+1][columna]!=1) { //abajo
+                        idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
+                    }
+                }                
+            }
+        } 
+    }
+
+    Cardname = () =>{
+        return this.type
+    }
+    
+    rotate = () => {
+        return
+    }
+
+  }
+
+  class FourCorner{
+
+    constructor(type){
+      this.type= "FourCorner";
+      this.backgroundImage ="url(/scr/img/fourCornered.png)";          
+    }
+
+    movimento(){
+      this.className+=" activo"
       for(let fila = 0; fila <= GameMatriz.length-1;fila++){
           for(let columna =0; columna <= GameMatriz[fila].length-1;columna++){
               if(GameMatriz[fila][columna]!=0){
-                  if (fila > 0){ //arriba                   
+                  if (fila > 0 && GameMatriz[fila-1][columna]!=1){ //arriba                   
                       idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
                   }                
-                  if (columna > 0){  //izquierda
+                  if (columna > 0 && GameMatriz[fila][columna-1]!=1){  //izquierda
                       idAdyacentSelector(fila,columna-1).className ="spaceAviable";      
                   }
-                  if (columna < GameMatriz[0].length - 1) { //derecha                  
+                  if (columna < GameMatriz[0].length - 1 && GameMatriz[fila][columna+1]!=1) { //derecha                  
                       idAdyacentSelector(fila,columna+1).className ="spaceAviable";     
                   }    
-                  if (fila < GameMatriz.length - 1) { //abajo
+                  if (fila < GameMatriz.length - 1 && GameMatriz[fila+1][columna]!=1) { //abajo
                       idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
                   }
-              }
-                  
+              }                
           }
       } 
   }
 
-  Cardname = () =>{
-    return this.type
-}
-
+    Cardname = () =>{
+        return this.type
+    }
+    
+    rotate = () => {
+        return
+    }
   }
-
 
 class Road{
 
@@ -165,6 +205,220 @@ class Road{
    
 } 
 
+class Curve{
+
+    constructor(){
+        this.type="CurveRB"
+        this.backgroundImage ="url(/scr/img/CurveRb.jpg";
+        this.rotation = 0          
+    }   
+
+    movimento(){
+        this.className += " activo";
+        console.log(this.getAttribute('data-type'));
+        for(let fila = 0; fila <= GameMatriz.length-1;fila++){
+            for(let columna =0; columna <= GameMatriz[fila].length-1;columna++){
+                
+                if(GameMatriz[fila][columna]!=0){ 
+                
+                        switch (this.getAttribute('data-type')) {
+
+                        case "CurveRB":
+
+                            switch (idAdyacentSelector(fila,columna).getAttribute('data-type')) { 
+                                
+                                case "FourCorner":                                           
+                                case "TriBLT":                                           
+                                case "TriTRL":                                           
+                                case "CurveTL":
+
+                                        if (fila > 0 && GameMatriz[fila-1][columna]!=1){ //arriba                   
+                                            idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
+                                        }                                                                    
+                                
+                                        if (columna > 0 && GameMatriz[fila][columna-1]!=1) {  //izquierda
+                                            idAdyacentSelector(fila,columna-1).className ="spaceAviable";  
+                                        };
+                                        break;
+                                    
+                                case"RoadH":  
+                                case"CurveBL":  
+                                case"TriRBL":  
+
+                                        if (columna > 0 && GameMatriz[fila][columna-1]!=1) {  //izquierda
+                                            idAdyacentSelector(fila,columna-1).className ="spaceAviable";  
+                                        }; 
+                                        break;
+
+                                case "RoadV":
+                                case "CurveTR":
+                                case "TriTRB":
+
+                                        if (fila > 0 && GameMatriz[fila-1][columna]!=1){ //arriba                   
+                                            idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
+                                        }
+                                        break;
+
+                                default:
+                                    break;        
+                            }        
+                        break;
+
+                        case "CurveBL":
+
+                            switch (idAdyacentSelector(fila,columna).getAttribute('data-type')) {
+                                
+                                case "FourCorner":
+                                case "TriTRL":
+                                case "CurveTR":
+                                case "TriTRB":
+                                        
+                                        if (columna < GameMatriz[0].length - 1 && GameMatriz[fila][columna+1]!=1) { //derecha                  
+                                            idAdyacentSelector(fila,columna+1).className ="spaceAviable";       
+                                        };
+                                    
+                                        if (fila > 0 && GameMatriz[fila-1][columna]!=1){ //arriba                   
+                                            idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
+                                        }
+                                        break;
+
+                                case "RoadH":
+                                case "CurveRB":
+                                case "TriRBL":
+                                        
+                                        if (columna < GameMatriz[0].length - 1 && GameMatriz[fila][columna+1]!=1) { //derecha                  
+                                            idAdyacentSelector(fila,columna+1).className ="spaceAviable";       
+                                        };                                        
+                                        break;
+
+                                case "TriBLT":
+                                case "CurveTL":
+                                case "RoadV":
+
+                                        if (fila > 0 && GameMatriz[fila-1][columna]!=1){ //arriba                   
+                                            idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
+                                        }                                        
+                                        break;
+                                        
+                                default:
+                                    break;
+                            }                   
+                        break;
+
+                        case "CurveTL":
+
+                            switch (idAdyacentSelector(fila,columna).getAttribute('data-type')) { 
+                                
+                                case "FourCorner":                                           
+                                case "TriRBL":                                           
+                                case "TriTRB":                                           
+                                case "CurveRB":
+
+                                        if (columna < GameMatriz[0].length - 1 && GameMatriz[fila][columna+1]!=1) { //derecha                  
+                                            idAdyacentSelector(fila,columna+1).className ="spaceAviable";       
+                                        };                                          
+                                
+                                        if (fila < GameMatriz.length - 1 && GameMatriz[fila+1][columna]!=1) { //abajo
+                                            idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
+                                        };
+                                        break;
+                                    
+                                case"RoadH":  
+                                case"CurveTR":  
+                                case"TriTRL":  
+
+                                        if (columna < GameMatriz[0].length - 1 && GameMatriz[fila][columna+1]!=1) { //derecha                  
+                                            idAdyacentSelector(fila,columna+1).className ="spaceAviable";       
+                                        };
+                                        break;
+
+                                case "RoadV":
+                                case "CurveBL":
+                                case "TriBLT":
+
+                                        if (fila < GameMatriz.length - 1 && GameMatriz[fila+1][columna]!=1) { //abajo
+                                            idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
+                                        };
+                                        break;
+
+                                default:
+                                    break;        
+                            }        
+                            break;
+
+                        case "CurveTR":
+
+                            switch (idAdyacentSelector(fila,columna).getAttribute('data-type')) { 
+                                
+                                case "FourCorner":                                           
+                                case "TriRBL":                                           
+                                case "TriBLT":                                           
+                                case "CurveBL":
+
+                                        if (columna > 0 && GameMatriz[fila][columna-1]!=1) {  //izquierda
+                                            idAdyacentSelector(fila,columna-1).className ="spaceAviable";  
+                                        };                                         
+                                
+                                        if (fila < GameMatriz.length - 1 && GameMatriz[fila+1][columna]!=1) { //abajo
+                                            idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
+                                        };
+                                        break;
+                                    
+                                case"RoadH":  
+                                case"CurveTL":  
+                                case"TriTRL":  
+
+                                        if (columna > 0 && GameMatriz[fila][columna-1]!=1) {  //izquierda
+                                            idAdyacentSelector(fila,columna-1).className ="spaceAviable";  
+                                        };
+
+                                case "RoadV":
+                                case "CurveRB":
+                                case "TriTRB":
+
+                                        if (fila < GameMatriz.length - 1 && GameMatriz[fila+1][columna]!=1) { //abajo
+                                            idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
+                                        };
+                                        break;
+
+                                default:
+                                    break;        
+                            }        
+                            break;
+                         
+                    default:
+                         break;               
+                    } 
+                }
+            }
+        } 
+    }    
+    rotate = () => {
+        
+       
+        
+        if (this.rotation===0 ){
+            this.rotation += 90;
+            this.type= "CurveBL"
+        } else if(this.rotation==90){
+            this.rotation +=90
+            this.type= "CurveTL"
+        } else if (this.rotation==180 ){
+            this.rotation +=90;
+            this.type= "CurveTR"
+        } else if(this.rotation>180){
+            this.rotation =0
+            this.type= "CurveRB"
+        
+        }
+        return this.rotation
+    }
+
+    Cardname = () =>{        
+        return this.type
+    }
+   
+} 
 
 
 
@@ -176,29 +430,34 @@ class Abbey{
       this.backgroundImage =`url(/scr/img/abbey.jpg)`;          
     }
     movimento(){
-      this.className+=" activo"
-      for(let fila = 0; fila <= GameMatriz.length-1;fila++){
-          for(let columna =0; columna <= GameMatriz[fila].length-1;columna++){
-              if(GameMatriz[fila][columna]!=0){
-                  if (fila > 0){ //arriba                   
-                      idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
-                  }                
-                  if (columna > 0){  //izquierda
-                      idAdyacentSelector(fila,columna-1).className ="spaceAviable";      
-                  }
-                  if (columna < GameMatriz[0].length - 1) { //derecha                  
-                      idAdyacentSelector(fila,columna+1).className ="spaceAviable";     
-                  }    
-                  if (fila < GameMatriz.length - 1) { //abajo
-                      idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
-                  }
-              }                
-          }
-      } 
-  }
+        this.className+=" activo"
+        for(let fila = 0; fila <= GameMatriz.length-1;fila++){
+            for(let columna =0; columna <= GameMatriz[fila].length-1;columna++){
+                if(GameMatriz[fila][columna]!=0){
+                    if (fila > 0 && GameMatriz[fila-1][columna]!=1){ //arriba                   
+                        idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
+                    }                
+                    if (columna > 0 && GameMatriz[fila][columna-1]!=1){  //izquierda
+                        idAdyacentSelector(fila,columna-1).className ="spaceAviable";      
+                    }
+                    if (columna < GameMatriz[0].length - 1 && GameMatriz[fila][columna+1]!=1) { //derecha                  
+                        idAdyacentSelector(fila,columna+1).className ="spaceAviable";     
+                    }    
+                    if (fila < GameMatriz.length - 1 && GameMatriz[fila+1][columna]!=1) { //abajo
+                        idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
+                    }
+                }                
+            }
+        } 
+    }
 
-  Cardname = () =>{
-    return this.type
-}
+    Cardname = () =>{
+        return this.type
+    }
+    
+    rotate = () => {
+        return
+    }
+    
   }
 

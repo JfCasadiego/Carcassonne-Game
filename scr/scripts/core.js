@@ -24,10 +24,11 @@ function eventsCardConstructor(newCardDrag,newInstanceObject){
       
     newCardDrag.addEventListener("dragend", dragDropCard);  
     
-    newCardDrag.addEventListener("click", (e)=>{        
-        console.log(newInstanceObject.Cardname())
-        newCardDrag.style.transform = `rotate(${newInstanceObject.rotate()}deg)`  
-        console.log(newInstanceObject.Cardname())
+    newCardDrag.addEventListener("click", (e)=>{
+        console.log("funciona")
+        console.log(newCardDrag.style.transform)
+        newCardDrag.style.transform = `rotate(${newInstanceObject.rotate()}deg)`
+
     });    
 }
 /*----------------------------------------------------------------------------------*/
