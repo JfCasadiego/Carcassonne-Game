@@ -1,6 +1,6 @@
 /*-------------------------selectores de Dom----------------------------------*/
 const newCardTurn = document.querySelector(".newCard");
-const discartCart = document.querySelector(".cementery");
+const discartCard = document.querySelector(".cementery");
 const boxes = document.querySelectorAll(".box");
 const cards = document.querySelectorAll('.cards');
 const deckZone = document.querySelector(".card-zone")
@@ -10,7 +10,6 @@ const gameGrid = document.querySelector(".game-field");
 /*--------------------------Variables generales ------------------------------*/
 let dragEnable = true;
 let discarCount =0;
-let boxInsideCardType=""
 
 /*----------------cosntruccion de los eventos de carta-----------------*/
 
@@ -151,15 +150,15 @@ function drop(ActualElement){
 
 
 /*----------------------------Zona de listeners--------------------------------*/
-discartCart.addEventListener("mouseenter",function(e){
+discartCard.addEventListener("mouseenter",function(e){
     const text=document.querySelector(".cementery p");
-    discartCart.style.backgroundColor="rgb(230, 12, 175)";
+    discartCard.style.backgroundColor="rgb(230, 12, 175)";
     text.innerHTML="DESCARTAR <br/> MANO";
 })
 
-discartCart.addEventListener("mouseleave",function(e){
+discartCard.addEventListener("mouseleave",function(e){
     const text=document.querySelector(".cementery p");
-    discartCart.style.backgroundColor="grey";
+    discartCard.style.backgroundColor="grey";
     text.innerHTML="";
 })
 
@@ -183,7 +182,7 @@ newCardTurn.addEventListener("click",e=>{
     }    
 })
 
-discartCart.addEventListener("click",(e)=>{
+discartCard.addEventListener("click",(e)=>{
     
     if(discarCount>=5){
         discartHand();

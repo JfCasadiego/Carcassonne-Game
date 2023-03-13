@@ -5,7 +5,7 @@
 /*------------------------variables generales del tablero de juego---------------------------*/
 
 function newRandomPiece(){
-    const piezas =[Road,Curve,Curve,Curve,FourCorner,Road,Town,Town,Town,Abbey]
+    const piezas =[Road,ThreeCorners,ThreeCorners,Curve,FourCorner,Road,Town,Town,Town,Abbey]
     pieceClass = Math.floor(Math.random()*10);    
     return piezas[pieceClass];
 }
@@ -417,9 +417,124 @@ class Curve{
     Cardname = () =>{        
         return this.type
     }
+}    
    
-} 
+class ThreeCorners{
 
+    constructor(){
+        this.type="TriTRB"
+        this.backgroundImage ="url(/scr/img/TriTRB.jpg";
+        this.rotation = 0          
+    }   
+
+    movimento(){
+        this.className += " activo";
+        console.log(this.getAttribute('data-type'));
+        for(let fila = 0; fila <= GameMatriz.length-1;fila++){
+            for(let columna =0; columna <= GameMatriz[fila].length-1;columna++){
+                
+                if(GameMatriz[fila][columna]!=0){ 
+                
+                        switch (this.getAttribute('data-type')) {
+
+                        case "TriTRB":
+
+                            switch (idAdyacentSelector(fila,columna).getAttribute('data-type')) { 
+                                
+                                case "FourCorner":                                           
+                                case "TriBLT":                                           
+                                
+
+                                        if (fila > 0 && GameMatriz[fila-1][columna]!=1){ //arriba                   
+                                            idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
+                                        }                                                                    
+                                
+                                        if (columna > 0 && GameMatriz[fila][columna-1]!=1) {  //izquierda
+                                            idAdyacentSelector(fila,columna-1).className ="spaceAviable";  
+                                        };
+
+                                        if (fila < GameMatriz.length - 1 && GameMatriz[fila+1][columna]!=1) { //abajo
+                                            idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
+                                        };
+                                        break;
+                                                                     
+                                case"TriTRB":  
+
+                                        if (fila > 0 && GameMatriz[fila-1][columna]!=1){ //arriba                   
+                                            idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
+                                        } 
+                                        
+                                        if (fila < GameMatriz.length - 1 && GameMatriz[fila+1][columna]!=1) { //abajo
+                                            idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
+                                        };
+                                        break;
+                                
+                                                                                                 
+                                case "TriRBL":                                           
+                                case "TriBLT":                                           
+                                case "CurveBL":
+
+                                        if (columna > 0 && GameMatriz[fila][columna-1]!=1) {  //izquierda
+                                            idAdyacentSelector(fila,columna-1).className ="spaceAviable";  
+                                        };                                         
+                                
+                                        if (fila < GameMatriz.length - 1 && GameMatriz[fila+1][columna]!=1) { //abajo
+                                            idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
+                                        };
+                                        break;
+                                    
+                                case"RoadH":                                  
+                                case"TriTRL":  
+
+                                        if (columna > 0 && GameMatriz[fila][columna-1]!=1) {  //izquierda
+                                            idAdyacentSelector(fila,columna-1).className ="spaceAviable";  
+                                        };
+                                        break;
+
+                                case "RoadV":
+                                case "CurveRB":                                
+
+                                        if (fila < GameMatriz.length - 1 && GameMatriz[fila+1][columna]!=1) { //abajo
+                                            idAdyacentSelector(fila+1,columna).className ="spaceAviable";           
+                                        };
+                                        break; 
+
+                                case "CurveTL":
+        
+                                        if (fila > 0 && GameMatriz[fila-1][columna]!=1){ //arriba                   
+                                                idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
+                                            }                                                                    
+                                                
+                                            if (columna > 0 && GameMatriz[fila][columna-1]!=1) {  //izquierda
+                                                idAdyacentSelector(fila,columna-1).className ="spaceAviable";  
+                                            };
+                                            break;            
+                                
+                                case "CurveTR":                                
+            
+                                            if (fila > 0 && GameMatriz[fila-1][columna]!=1){ //arriba                   
+                                                idAdyacentSelector(fila-1,columna).className ="spaceAviable";                  
+                                            }
+                                            break;
+                                default:
+                                    break;               
+                                } 
+                            }
+                        }
+                    } 
+                }    
+            }
+
+    rotate = () => {               
+        return this.rotation
+    }
+
+    Cardname = () =>{        
+        return this.type
+    }
+   
+ 
+}
 
 
 
