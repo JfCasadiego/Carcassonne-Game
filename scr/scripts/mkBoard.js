@@ -28,10 +28,10 @@ function placeCardInGridCenter(row,colums){
     const centralcolums = Math.floor(colums/2);
 
 
-
-    newCardDrag.style.backgroundColor="red" 
+    
+    newCardDrag.style.backgroundImage ="url(/scr/img/fourCornered.png)"
     newCardDrag.className="cardsPlace"
-    idAdyacentSelector(centralrow,centralcolums).setAttribute('data-type', 'RoadHV')
+    idAdyacentSelector(centralrow,centralcolums).setAttribute('data-type', 'FourCorner')
     
     idAdyacentSelector(centralrow,centralcolums).appendChild(newCardDrag)
     GameMatriz[centralrow][centralcolums]=1
@@ -64,34 +64,6 @@ function gameMkMatriz(posicion_x,posicion_y){
             
     }
 
-/* ---------Funcion para comprobar casillas adyacentes aun posición en la matriz del juego-----------------*/
-/*
-function verificarAdyacentes(){
-
-    for(let fila = 0; fila <= GameMatriz.length-1;fila++){
-        
-        for(let columna =0; columna <= GameMatriz[fila].length-1;columna++){
-
-            if(GameMatriz[fila][columna]!=0){
-                
-                if (fila > 0){ //arriba                   
-                    idAdyacentSelector(fila-1,columna).className ="spaceAviable"                  
-                }                
-                if (columna > 0){  //izquierda
-                    idAdyacentSelector(fila,columna-1).className ="spaceAviable"      
-                }
-                if (columna < GameMatriz[0].length - 1) { //derecha                  
-                    idAdyacentSelector(fila,columna+1).className ="spaceAviable"     
-                }    
-                if (fila < GameMatriz.length - 1) { //abajo
-                    idAdyacentSelector(fila+1,columna).className ="spaceAviable"           
-                }
-            }
-            
-        }
-    }    
-}*/
-
 function eraseAviableSpaces(){
     for(let fila = 0; fila <= GameMatriz.length-1;fila++){        
         for(let columna =0; columna <= GameMatriz[fila].length-1;columna++){            
@@ -111,7 +83,6 @@ function idAdyacentSelector(fila,columna){
     const divAdyacent = document.getElementById(`${fila}-${columna}`)
     return divAdyacent
 };
-
 
 
 /*---------------------funciones para inteaccion de matriz del juego------------------------*/

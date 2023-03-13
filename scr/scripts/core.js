@@ -1,8 +1,3 @@
-/*--------------------------Variables generales ------------------------------*/
-let dragEnable = true;
-let discarCount =0;
-let boxInsideCardType=""
-
 /*-------------------------selectores de Dom----------------------------------*/
 const newCardTurn = document.querySelector(".newCard");
 const discartCart = document.querySelector(".cementery");
@@ -12,18 +7,59 @@ const deckZone = document.querySelector(".card-zone")
 const box = document.querySelector(".game-field .box");
 const gameGrid = document.querySelector(".game-field");
 
-/*---------------------------funcion de inicio------------------------------------------*/
-function newGame(){    
+/*--------------------------Variables generales ------------------------------*/
+let dragEnable = true;
+let discarCount =0;
+let boxInsideCardType=""
+
+/*----------------cosntruccion de los eventos de carta-----------------*/
+
+function eventsCardConstructor(newCardDrag,newInstanceObject){
+            
     
-    boxListeners()
-
-    for(let i=1;i<=4;i++){
-        newTurn();
-    }
-
-    discarCount=0
-    dragEnable=true; 
+    newCardDrag.addEventListener("dragstart",()=>{
+        newCardDrag.setAttribute('data-type',newInstanceObject.Cardname()) 
+    }); 
+    newCardDrag.addEventListener("dragstart",newInstanceObject.movimento);  
+      
+    newCardDrag.addEventListener("dragend", dragDropCard);  
+    
+    newCardDrag.addEventListener("click", (e)=>{        
+        console.log(newInstanceObject.Cardname())
+        newCardDrag.style.transform = `rotate(${newInstanceObject.rotate()}deg)`  
+        console.log(newInstanceObject.Cardname())
+    });    
 }
+/*----------------------------------------------------------------------------------*/
+
+
+function styleCardConstructor (newCardDrag,newInstanceObject){
+    newCardDrag.style.backgroundImage= newInstanceObject.backgroundImage
+    newCardDrag.className="cards card"
+    newCardDrag.draggable=true;  
+}
+     
+
+
+/*----------------funciones para generar carta y nuevo turno-----------------*/
+
+function newTurn(){  
+
+    const newCardDrag = document.createElement("div");    
+    const newObject=  newRandomPiece();    
+    const newInstanceObject = new newObject;
+
+    styleCardConstructor(newCardDrag,newInstanceObject);
+    eventsCardConstructor(newCardDrag,newInstanceObject);
+
+    deckZone.appendChild(newCardDrag);
+    discarCount+=1
+    
+}
+
+
+
+
 
 /*---------------------------funcion para agregar los enventos a las casillas del tablero----------------------------------*/
 function boxListeners(){
@@ -37,34 +73,6 @@ function boxListeners(){
     });
 }
 
-/*----------------funciones para generar carta y nuevo turno-----------------*/
-
-function newTurn(){  
-
-    const newCardDrag = document.createElement("div");    
-    const newObject=  newRandomPiece()    
-    const newInstanceObject = new newObject    
-    
-    eventsCardConstructor(newCardDrag,newInstanceObject)
-    deckZone.appendChild(newCardDrag);
-    discarCount+=1
-    
-}
-/*----------------cosntruccion de los eventos de carta-----------------*/
-
-function eventsCardConstructor(newCardDrag,newInstanceObject){
-    newCardDrag.style.backgroundImage= newInstanceObject.backgroundImage
-    newCardDrag.className="cards card"
-    newCardDrag.draggable=true;   
-    newCardDrag.setAttribute('data-type', newInstanceObject.name())
-    newCardDrag.addEventListener("dragstart", newInstanceObject.movimento);
-    newCardDrag.addEventListener("dragend", dragDropCard);   
-    newCardDrag.addEventListener("click", (e)=>{        
-        newCardDrag.style.transform = `rotate(${newInstanceObject.rotate()}deg)`          
-    });
-    
-    
-}
 
 
 
@@ -182,11 +190,21 @@ discartCart.addEventListener("click",(e)=>{
     }    
 })
 
+/*---------------------------funcion de inicio------------------------------------------*/
+function newGame(){    
+    
+    boxListeners()
+
+    for(let i=1;i<=4;i++){
+        newTurn();
+    }
+
+    discarCount=0
+    dragEnable=true; 
+}
 
 
 
  /*---------------------------iniciador de juego-------------------------------------*/
 newGame();
-
-
 
