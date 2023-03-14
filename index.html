@@ -13,30 +13,58 @@
         <h1>Carcassonne Game</h1>
         <ul class="opcions-var">
             <li><a href="">New Game</a></li>
-            <li><a href="">Scores</a></li>
+            <li><a  class="buttonScore" href="">Score</a></li>
             <li><a href="">Change Sound</a></li>
         </ul>
     </div>   
 </header>
 <main>
    <div class="game-window">
-        <div class="game-area">
-        <div id="game" class="game-field">
+    
+    <div class="infoOptions">
         
+        <div class="infoOptionsBox">
+            <h2>Carcassonne</h2>
+            <h3>SCORE</h3>
+            <h4>00000</h4>
         </div>
+
+        <div class="infoOptionsBox">
+            <h3>TILE LEFT</h3>
+            <h4>00000</h4>
+        </div>
+
+        <div class="infoOptionsBox buttons">
+            <button class="button"></button> 
+            <button class="button"></button> 
+            <button class="button"></button> 
+            
+        </div>
+    </div>
+
+        <div class="game-area">
+
+        
+
+        <div id="game" class="game-field">        
+        </div>
+
         <div class="game-ui">
             <div class="discard-zone">
                 <div class="cementery card">
                     <p></p>
                 </div>
                 </div>
+
             <div class="card-zone">              
             </div>
+
             <div class="deck-zone">
                 <div class="newCard card">
                     <p></p>
                 </div>
             </div>
+
         </div>
         </div> 
     </div>

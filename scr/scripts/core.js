@@ -6,6 +6,7 @@ const cards = document.querySelectorAll('.cards');
 const deckZone = document.querySelector(".card-zone")
 const box = document.querySelector(".game-field .box");
 const gameGrid = document.querySelector(".game-field");
+const buttonScore =document.querySelector(".buttonScore");
 
 /*--------------------------Variables generales ------------------------------*/
 let dragEnable = true;

@@ -63,21 +63,83 @@ main{
     background-size: cover;
     background-color: var(--backColor);
     display: flex;
-    justify-content: center;    
+    justify-content: center;
+    align-items: center;    
     width: 100%;
-    height: 100%;
+    height: 100%;    
 }
+
+.infoOptions{
+    background-color:rgba(187, 190, 188, 0.623) ;
+    height: 30%;
+    width: 15% ;
+    margin-right: 4%;
+    margin-top: -20%;    
+    border-radius: 10px;
+    
+    
+}
+
+.infoOptions h2{
+    position: absolute;    
+    margin-top: -45%;    
+    z-index: 5;
+    font-size: 4rem;
+    text-align: center;
+    font-weight: bold;
+    color: blue;
+}
+
+
+.infoOptionsBox{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;  
+    height: 33.33%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.infoOptionsBox h3{
+    margin-top: 20%;
+    width: 100%;
+    font-size: 2.5rem;
+    text-align: center;
+    font-weight: bold;
+    color: blue;
+}
+.infoOptionsBox h4{
+    
+    width: 100%;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(246, 246, 248);
+}
+
+ .buttons{
+    display: flex;
+    justify-content: space-around;
+    
+}
+.infoOptionsBox .button{
+    width: 50px;
+    height: 50px;
+}
+
 
 .game-area{   
     display: flex;
     flex-wrap: wrap;       
     align-items: center;
     justify-content: center;
-    margin-top: 10%;
+    margin-top: -10%;
     width: 50%;
     height: 65%;
-    border: 5px solid rgb(22, 225, 59);
+    border: 5px solid rgb(22, 42, 225);
     background-color: rgba(72, 71, 83, 0.302);
+    
    
 }
 
