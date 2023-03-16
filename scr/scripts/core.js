@@ -1,4 +1,4 @@
-/*-------------------------selectores de Dom----------------------------------*/
+/*-------------------------Dom Selectors----------------------------------*/
 const newCardTurn = document.querySelector(".newCard");
 const discartCard = document.querySelector(".cementery");
 const boxes = document.querySelectorAll(".box");
@@ -6,13 +6,18 @@ const cards = document.querySelectorAll('.cards');
 const deckZone = document.querySelector(".card-zone")
 const box = document.querySelector(".game-field .box");
 const gameGrid = document.querySelector(".game-field");
-const buttonScore =document.querySelector(".buttonScore");
+const buttonScore =document.querySelector(".buttonScore")
+const TotalScoreArea =document.getElementById("scoreNumber")
+const tileLeftArea =document.getElementById("tileNumber")
 
-/*--------------------------Variables generales ------------------------------*/
+
+/*--------------------------General Vars ------------------------------*/
 let dragEnable = true;
 let discarCount =0;
+let tileLeft = (GameMatriz[0].length * GameMatriz[0].length)-1
 
-/*----------------cosntruccion de los eventos de carta-----------------*/
+
+/*------------------Tile events Constructor------------------------------------------------------------------*/
 
 function eventsCardConstructor(newCardDrag,newInstanceObject){
             
@@ -24,17 +29,16 @@ function eventsCardConstructor(newCardDrag,newInstanceObject){
       
     newCardDrag.addEventListener("dragend", dragDropCard);  
     
-    newCardDrag.addEventListener("click", (e)=>{
-        console.log("funciona")
-        console.log(newCardDrag.style.transform)
+    newCardDrag.addEventListener("click", (e)=>{        
         newCardDrag.style.transform = `rotate(${newInstanceObject.rotate()}deg)`
 
     });    
 }
-/*----------------------------------------------------------------------------------*/
+/*-------------------------Tile Style Constructor--------------------------------------------------------*/
 
 
 function styleCardConstructor (newCardDrag,newInstanceObject){
+    newCardDrag.setAttribute('data-type',newInstanceObject.Cardname())
     newCardDrag.style.backgroundImage= newInstanceObject.backgroundImage
     newCardDrag.className="cards card"
     newCardDrag.draggable=true;  
@@ -42,10 +46,10 @@ function styleCardConstructor (newCardDrag,newInstanceObject){
      
 
 
-/*----------------funciones para generar carta y nuevo turno-----------------*/
+/*----------------funtions to make new Cards(tile)-----------------*/
 
 function newTurn(){  
-
+    
     const newCardDrag = document.createElement("div");    
     const newObject=  newRandomPiece();    
     const newInstanceObject = new newObject;
@@ -53,16 +57,16 @@ function newTurn(){
     styleCardConstructor(newCardDrag,newInstanceObject);
     eventsCardConstructor(newCardDrag,newInstanceObject);
 
+    /*agregar funcion general de comparacion*/
+    
     deckZone.appendChild(newCardDrag);
     discarCount+=1
-    
+       
 }
 
 
 
-
-
-/*---------------------------funcion para agregar los enventos a las casillas del tablero----------------------------------*/
+/*---------------------------Function to add listenerEvents to the boxes grid----------------------------------*/
 function boxListeners(){
 
     boxes.forEach(box => {
@@ -73,10 +77,6 @@ function boxListeners(){
         
     });
 }
-
-
-
-
 
 /*----------------funcion para permitir el drag en las tarjetas-----------------*/
 
@@ -98,6 +98,17 @@ function discartHand(){
     console.log("Deck descartado")  
 };
 
+/*--------------------------function for clean the board------------------------------------*/
+
+function eraseAviableSpaces(){
+    GameMatriz.forEach((row, fila) => {
+        row.forEach((cell, columna) => {                    
+            if(idAdyacentSelector(fila,columna).className !="box"){
+                idAdyacentSelector(fila,columna).className ="box";
+            }
+        })
+    })    
+}
 
 /*----------------Configuraciones para drag and drop carta en movimiento--------------------*/
 
@@ -110,14 +121,11 @@ function dragDropCard(e){
     }        
     if(this.parentNode.className === "card-zone" ){
         this.className="cards card"
-    }; 
-    
-    
-
-    eraseAviableSpaces()
+    };
+eraseAviableSpaces()
 };
 
-/*-----------Configuraciones para drag and drop para las casillas del trablero----------*/
+/*-----------Configuraciones para drag and drop para las casillas del tablero----------*/
 
 function dragover(ActualElement){
     ActualElement.preventDefault();    
@@ -136,13 +144,14 @@ function dragleave(){
 
 function drop(ActualElement){
     const fichaSeleccionada = document.querySelector(".cards.activo");
-    //this.className="box";    
+       
     if(dragEnable === true && this.className==="spaceAviable"){
         this.setAttribute('data-type',fichaSeleccionada.getAttribute("data-type"))
         this.appendChild(fichaSeleccionada);
         this.style.pointerEvents="none";
         dragEnable=false;        
         updateMatriz(ActualElement)
+        numberTileLeft();
     }
 }
   
@@ -151,6 +160,9 @@ function drop(ActualElement){
 
 
 /*----------------------------Zona de listeners--------------------------------*/
+
+
+
 discartCard.addEventListener("mouseenter",function(e){
     const text=document.querySelector(".cementery p");
     discartCard.style.backgroundColor="rgb(230, 12, 175)";
@@ -183,6 +195,14 @@ newCardTurn.addEventListener("click",e=>{
     }    
 })
 
+buttonScore.addEventListener("click",e=>{
+    e.preventDefault()
+    TotalScoreArea.innerHTML=scoreSystem()
+    movesAvailable()  
+   console.log(VerificarMOvimientosDisponibles())
+   eraseAviableSpaces()
+})
+
 discartCard.addEventListener("click",(e)=>{
     
     if(discarCount>=5){
@@ -198,8 +218,9 @@ function newGame(){
 
     for(let i=1;i<=4;i++){
         newTurn();
+        
     }
-
+    
     discarCount=0
     dragEnable=true; 
 }
@@ -208,4 +229,3 @@ function newGame(){
 
  /*---------------------------iniciador de juego-------------------------------------*/
 newGame();
-

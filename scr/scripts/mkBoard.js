@@ -23,17 +23,16 @@ function makeBoardGame(row,colums){
 
 function placeCardInGridCenter(row,colums){
 
-    const newCardDrag = document.createElement("div");  
+    const centerCard = document.createElement("div");  
     const centralrow = Math.floor(row/2);
     const centralcolums = Math.floor(colums/2);
 
 
     
-    newCardDrag.style.backgroundImage ="url(/scr/img/fourCornered.png)"
-    newCardDrag.className="cardsPlace"
-    idAdyacentSelector(centralrow,centralcolums).setAttribute('data-type', 'FourCorner')
-    
-    idAdyacentSelector(centralrow,centralcolums).appendChild(newCardDrag)
+    centerCard.style.backgroundImage ="url(/scr/img/FourCorner.png)"
+    centerCard.className="cardsPlace"
+    idAdyacentSelector(centralrow,centralcolums).appendChild(centerCard)
+    idAdyacentSelector(centralrow,centralcolums).setAttribute('data-type', 'FourCorner')  
     GameMatriz[centralrow][centralcolums]=1
 
 
@@ -64,17 +63,7 @@ function gameMkMatriz(posicion_x,posicion_y){
             
     }
 
-function eraseAviableSpaces(){
-    for(let fila = 0; fila <= GameMatriz.length-1;fila++){        
-        for(let columna =0; columna <= GameMatriz[fila].length-1;columna++){            
-            if(idAdyacentSelector(fila,columna).className !="box"){
-                idAdyacentSelector(fila,columna).className ="box";
-            }
-            
 
-        }
-    }    
-}
 
 
 /*-----------------Funcion para tener un selector de DOM variable----------------------*/
@@ -84,10 +73,104 @@ function idAdyacentSelector(fila,columna){
     return divAdyacent
 };
 
+function numberTileLeft(){    
+    tileLeft -= 1
+    tileLeftArea.innerHTML=tileLeft
+};
+
+
+function abbeyScore(fila,columna){
+    
+    let abbeyScore = 0 
+
+    const directions = [
+        [-1, 0],         // arriba
+        [-1, 1],         // arriba-derecha
+        [-1, -1],        // arriba-izquierda
+        [0, 1],          // derecha
+        [0, -1],         // izquierda
+        [1, 0],          // abajo
+        [1, 1],          // abajo-derecha
+        [1, -1]          // abajo-izquierda
+      ];
+
+    
+      directions.forEach(([filaCoordinate, columnCoordinate]) => {
+        const row = fila + filaCoordinate;
+        const col = columna + columnCoordinate;
+      
+        if (row >= 0 && row < GameMatriz.length && col >= 0 && col < GameMatriz[0].length && GameMatriz[row][col] === 1) {
+            abbeyScore+=1             
+        }   
+      });
+
+      return abbeyScore
+
+}
+
+function scoreTown(fila,columna){
+    const directions = [
+        [-1, 0],         // arriba
+        [0, 1],          // derecha
+        [0, -1],         // izquierda
+        [1, 0],          // abajo
+      ];
+
+    let valueScoreTown =2
+
+    directions.forEach(([filaCoordinate, columnCoordinate]) => {
+        const row = fila + filaCoordinate;
+        const col = columna + columnCoordinate;
+        
+
+        if (row >= 0 && row < GameMatriz.length && col >= 0 && col < GameMatriz[0].length && GameMatriz[row][col] === 1) {
+            if(idAdyacentSelector(row,col).getAttribute("data-type")==="Town"){
+                valueScoreTown=3
+            }
+        } 
+    });
+
+    return valueScoreTown;
+};
+
+
+function scoreSystem(){    
+    const roadTiles=["FourCorner","RoadH","RoadV","CurveBL","CurveTL","CurveRB","CurveTR",
+                    "TriTRL","TriTRB","TriRBL","TriBLT",]
+    
+    let totalScore = 0
+
+
+    GameMatriz.forEach((row, fila) => {
+        row.forEach((cell, columna) => {
+          if (cell !== 0) { 
+                let element = idAdyacentSelector(fila,columna).getAttribute('data-type')
+                
+                switch (true) {
+                    
+                    case roadTiles.includes(element):
+                        totalScore+=1
+                    break;
+
+                    case element=="Abbey":                        
+                        totalScore+= abbeyScore(fila,columna);
+
+                    break;
+                    
+                    case element=="Town":                        
+                        totalScore+= scoreTown(fila,columna);
+                    break;
+                    
+                    default:                                                
+                    break; 
+                }
+            }
+        })
+    })
+       
+    return totalScore;
+}
 
 /*---------------------funciones para inteaccion de matriz del juego------------------------*/
 
 makeBoardGame(11,11);
-
-//console.log(idAdyacentSelector(5,5).getAttribute('data-type'))
-
