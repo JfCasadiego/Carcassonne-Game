@@ -9,50 +9,84 @@
 </head>
 <body>
 <header>
-    <div class="nav-bar">
-        <h1>Carcassonne Game</h1>
-        <ul class="opcions-var">
-            <li><a href="">New Game</a></li>
-            <li><a  class="buttonScore" href="">Score</a></li>
-            <li><a href="">Change Sound</a></li>
-        </ul>
-    </div>   
+ 
 </header>
 <main>
    <div class="game-window">
     
-    <div class="infoOptions">
+    <div class="instruccions">
+        <div class="instruccions-title">
+            <h2>Carcassonne Rules</h2>
+            <div>
+                <button class="close">
+                </button>
+            </div>
+        </div>
+        <div class="instruccions-body">            
+            <ol>
+                <li>At the beginning of the game, the player receives 4 random tiles.</li>
+                <li>The player can only play one tile per turn.</li>
+                <li>With each new turn, the player receives a new random tile to replace the one used in the previous turn.</li>
+                <li>The player has the option to replace their tiles with 4 new ones using the discard button, this button is activated after 5 turns, and after use, it must be played for 5 turns again to be activated.</li>
+                <li>There are 3 types of tiles in the game: Road, City, and Abbey.</li>
+                <li>The board starts with a road tile in the center of the board.</li>
+                <li>Road tiles can only be placed adjacent to another road tile, and each tile placed equals one point on the score counter.</li>
+                <li>City and Abbey tiles can be placed adjacent to road, city, or abbey tiles. City tiles award 2 points per tile and if placed adjacent to another city tile, each tile in the city chain awards an additional 3 points.</li>
+                <li>Abbey tiles award 1 point for each tile adjacent to its perimeter, so a maximum of 8 points can be scored if the abbey tile is completely surrounded by other tiles.</li>
+                <li>The game ends when there are no empty spaces on the board or when no more moves are possible, and the option to discard tiles is not available</li>
+            </ol>            
+        </div>
         
-        <div class="infoOptionsBox">
-            <h2>Carcassonne</h2>
-            <h3>SCORE</h3>
-            <h4 id="scoreNumber">00000</h4>
+    </div>
+
+
+    <div class="msgbox">
+        <div class="containerText title">
+            <h2>Finish Game</h2>
+            <h3 id="MsgFinishGame"></h3>
+        </div>
+        <div class="containerText finalScore">
+            <h2>Final Score</h2> 
+            <h3 class="scoreNumber"></h3>
         </div>
 
-        <div class="infoOptionsBox">
+        <div class="containerText buttonrReset">
+            <button class="newGame">
+                <a href="#game">New Game</a>
+            </button>
+        </div>
+    </div>
+
+    <div class="infoOptions">
+       <img src="/scr/img/Papyros.png" alt="">
+        <div class="infoOptionsBox score">
+            <h2>Carcassonne</h2>
+            <h3>SCORE</h3>
+            <h4 class="scoreNumber">00000</h4>
+        </div>
+
+        <div class="infoOptionsBox tiles">
             <h3>TILE LEFT</h3>
             <h4 id="tileNumber">00000</h4>
         </div>
 
         <div class="infoOptionsBox buttons">
-            <button class="button"></button> 
-            <button class="button"></button> 
-            <button class="button"></button> 
+            <button class="button displayinstruccions"></button> 
+            <button class="button refresh" ></button> 
             
         </div>
     </div>
 
         <div class="game-area">
 
-        
-
         <div id="game" class="game-field">        
+        
         </div>
 
         <div class="game-ui">
             <div class="discard-zone">
                 <div class="cementery card">
-                    <p></p>
+                    <p>DISCARD <br/> HAND</p>
                 </div>
                 </div>
 
@@ -61,7 +95,7 @@
 
             <div class="deck-zone">
                 <div class="newCard card">
-                    <p></p>
+                    <p>NEW <br/> TURN</p>
                 </div>
             </div>
 
@@ -72,7 +106,7 @@
 <script src="/scr/scripts/mkBoard.js"></script> 
 <script src="/scr/scripts/gamePieces.js"></script>
 <script src="/scr/scripts/core.js"></script> 
-<script src="/scr/scripts/codigo final.js"></script> 
+
 
 </body>
 <footer>

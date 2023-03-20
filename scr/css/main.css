@@ -17,7 +17,7 @@
 main{
     width: 100%;
     height: 1500px;
-    border: 5px solid red;
+    
 }
 
 /*-------------------------------------------Nav-Bar------------------------------------ */
@@ -30,6 +30,7 @@ main{
     justify-content: center;
     align-items: center;
     height: 5rem;
+    
 }
 
 .nav-bar h1{
@@ -66,33 +67,186 @@ main{
     justify-content: center;
     align-items: center;    
     width: 100%;
-    height: 100%;    
+    height: 100%;
+    position: relative;    
+}
+.instruccions{
+
+    position: absolute;
+    background-color: rgba(128, 128, 128, 0.817);
+    height: 800px;
+    width: 800px;
+    visibility: hidden;
+    z-index: 100;
+    
+}
+.instruccions-title {
+  display: flex;
+  align-items:center;
+  justify-content: space-between;
+  margin-right: 5%;
+  margin-left: 5%;
+  
+    
+}
+.instruccions-title h2{
+    text-align: center;
+   font-size: 2.5rem;
+   font-weight: bolder;
+   color: white; 
+    
 }
 
-.infoOptions{
-    background-color:rgba(187, 190, 188, 0.623) ;
+.instruccions-title .close{
+    background-image: url(/scr/img/Google\ Icon\ Close\ .png);
+    background-repeat: no-repeat;
+    background-size: cover;
+     height: 20px;
+     width: 20px;    
+}
+
+.instruccions-title .close:hover{
+    background-color:rgba(33, 33, 100, 0.682)
+    
+}
+
+.instruccions-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
+
+.instruccions-body ol{
+    width: 80%;
+    
+    
+}
+
+.instruccions-body li{
+   font-size: 1.5rem;
+    color: white;
+}
+
+.msgbox{
+    height: 800px;
+    width: 800px;
+    background-color: rgba(57, 65, 62, 0.822);
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;    
+    align-content: space-around;
+    z-index: 50;
+    visibility: hidden;
+    border-radius: 50px;
+}
+.msgbox .containerText{
+    
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+}
+.msgbox #MsgFinishGame{
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 2.5rem;
+
+}
+
+
+.msgbox h2{
+    width: 100%;
+    text-align: center;    
+    font-size: 3rem;
+    color: white;
+    font-weight: bolder;
+    
+}
+
+.msgbox h3{
+    width: 100%;
+    text-align: center;
+    font-size: 2.5rem;
+    color: white;
+    
+    
+}
+
+.msgbox .buttonrReset button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 50px;
+    text-align: center;
+    font-size: 2.5rem;
+    border-radius: 10px;
+}
+
+
+    
+
+.msgbox .buttonrReset a{
+    font-size: 2rem;
+    text-decoration: none;
+    font-weight: bolder;
+    color:darkblue
+    
+    
+}
+
+.msgbox .buttonrReset a:hover{
+
+    font-weight: bolder;
+    color:rgb(10, 10, 232);
+
+}
+
+
+
+.infoOptions{     
+    background-color:rgb(100, 103, 101) ;
     height: 30%;
     width: 15% ;
     margin-right: 4%;
     margin-top: -20%;    
     border-radius: 10px;
+    position: relative;
     
     
 }
-
-.infoOptions h2{
-    position: absolute;    
-    margin-top: -45%;    
-    z-index: 5;
+.infoOptions img{     
+   width: 600px;
+   height: 1000px;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%); 
+   max-width: 150%; 
+   max-height: 150%; 
+ 
+   
+}
+.score h2{   /*className= infoOptionsBox score*/
     font-size: 4rem;
     text-align: center;
-    font-weight: bold;
-    color: blue;
+    font-weight: bold;    
+    color: rgb(185, 70, 8);
+    margin-bottom: 2%;
 }
 
-
+.tiles {   /*className= infoOptionsBox tiles*/
+    margin-top: 20%;
+   
+}
 .infoOptionsBox{
-    position: relative;
+    position: relative;    
     display: flex;
     flex-wrap: wrap;  
     height: 33.33%;
@@ -101,21 +255,20 @@ main{
     justify-content: center;
 }
 
-.infoOptionsBox h3{
-    margin-top: 20%;
+.infoOptionsBox h3{    
     width: 100%;
     font-size: 2.5rem;
     text-align: center;
     font-weight: bold;
-    color: blue;
+    color: rgb(98, 43, 3);
 }
+
 .infoOptionsBox h4{
-    
     width: 100%;
     font-size: 2rem;
     text-align: center;
     font-weight: bold;
-    color: rgb(246, 246, 248);
+    color: rgb(98, 43, 3);
 }
 
  .buttons{
@@ -124,10 +277,32 @@ main{
     
 }
 .infoOptionsBox .button{
+    border-radius: 10px;
+    background-color: rgba(178, 171, 171, 0.62); 
     width: 50px;
     height: 50px;
 }
-
+.infoOptionsBox .button:hover{
+    background-color:rgba(33, 33, 100, 0.682) ;
+    
+}
+.infoOptionsBox .displayinstruccions{    
+    background-image: url(/scr/img/Google\ Icon\ Notes.png);
+    
+    width: 50px;
+    height: 50px;
+}
+.infoOptionsBox  .refresh{
+    background-image: url(/scr/img/Google\ Icon\ Refresh.png);
+    
+    width: 50px;
+    height: 50px;
+}
+.infoOptionsBox  .sound{
+    background-image: url(/scr/img/Google\ Icon\ Sound.png);
+    width: 50px;
+    height: 50px;
+}
 
 .game-area{   
     display: flex;
@@ -137,15 +312,14 @@ main{
     margin-top: -10%;
     width: 50%;
     height: 65%;
-    border: 5px solid rgb(22, 42, 225);
-    background-color: rgba(72, 71, 83, 0.302);
+    
     
    
 }
 
 /*----------------------------------------------Game-Field------------------------------------------*/
 .game-field{
-    background-color: rgba(255, 255, 255, 0.212);
+    background-color: rgba(47, 45, 45, 0.452);
     height: auto;
     width: auto;
     display: grid;  
@@ -166,16 +340,16 @@ main{
 
     
 }
-
+/*
 .game-field .box:hover{
    background-color: green;
    
-}
-
-.Activehover{ /*esta class */
+}*/
+/*
+.Activehover{ 
     background-color: rgb(22, 244, 236);
 }
-
+*/
 .spaceAviable{
     border: 1px dotted black;
     animation: parpadeo 1s ease-in-out infinite;
@@ -185,47 +359,54 @@ main{
       
 }
 @keyframes parpadeo {
-    0%{background-color:rgba(40, 5, 240, 0.432);} 
+    0%{background-color:rgba(222, 100, 14, 0.85);} 
     50%{background-color:  rgba(255, 255, 255, 0.212);}      
-    100%{background-color:  rgba(40, 5, 240, 0.432);} 
+    100%{background-color:  rgba(222, 100, 14, 0.85);}   
 }
 
 
 .game-ui{
-    background-color: rgba(17, 223, 223, 0.404);    
-    width:80%;
-    padding: 0; 
-    margin: 0; 
+    background-image: url(/scr/img/nevodka170300041.jpg); 
+    background-repeat: no-repeat;
+    background-size: cover;     
+    width:80%;    
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
+    border-radius: 20px;
 }
 
 .discard-zone{
     width: auto;
-    height: auto;
-    background-color: brown;
+    height: auto;    
     display: flex;
     align-items:start;
     justify-content: center;
 
 }
 .cementery {
+    background-image: url(/scr/img/DALL·E\ 2023-03-16\ 18.32.06.png);
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.5s ease;
+ }
+ .cementery:hover {
+    transform: translateY(-15%);
  }
 
 .cementery p{
     text-align: center;
     color: var(--fontColor);
+    background-color: rgba(101, 97, 97, 0.173);
+    font-weight: bolder;
+    font-size: 1.2rem; 
 }
 
 .card-zone{
     width: 500px;
-    height: auto;
-    background-color: rgb(21, 188, 21);
+    height: auto;    
     display: flex;
     align-items: start;
     justify-content: center;
@@ -233,15 +414,13 @@ main{
 }
 .deck-zone{
     width: auto;
-    height: auto;
-    background-color: rgb(14, 43, 207);
+    height: auto;    
     display: flex;
     align-items: start;
     justify-content: center;
 }
 /*----------------------------------------------styling Cards------------------------------------------*/
-.card{
-    background-color: rgb(236, 168, 8);
+.card{   
     border-radius: 10px;
     margin: 5px;
     width: 100px;
@@ -268,12 +447,13 @@ main{
 }
 
 .card-zone .card:hover{
-    background-color: blue;
+    
     transform: translateY(-15%);
 }
 
 .card-zone .cards:active{  
-    background-color: rgb(230, 12, 175);   
+    background-color: rgb(230, 12, 175);
+    transform: translateY(-15%);   
 }
 
 
@@ -286,11 +466,16 @@ main{
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(143deg, rgba(134,64,0,1) 8%, rgba(212,64,0,1) 51%, rgba(255,122,0,1) 92%);
+    background-image: url(/scr/img/DALL·E\ 2023-03-16\ 18.32.06.png);
     
 }
 .newCard p{
-    color: white;
+    width: auto;
+    height: auto;    
+    color: rgb(255, 255, 255);
+    background-color: rgba(101, 97, 97, 0.173);
+    font-weight: bolder;
+    font-size: 1.2rem;    
     text-align: center;
 }
 

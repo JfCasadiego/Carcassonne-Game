@@ -1,20 +1,19 @@
 /*-------------------------Dom Selectors----------------------------------*/
 const newCardTurn = document.querySelector(".newCard");
 const discartCard = document.querySelector(".cementery");
-const boxes = document.querySelectorAll(".box");
 const cards = document.querySelectorAll('.cards');
 const deckZone = document.querySelector(".card-zone")
-const box = document.querySelector(".game-field .box");
-const gameGrid = document.querySelector(".game-field");
-const buttonScore =document.querySelector(".buttonScore")
-const TotalScoreArea =document.getElementById("scoreNumber")
+const buttonInstructions =document.querySelector(".displayinstruccions")
+const buttonClose =document.querySelector(".close")
+const buttonRefresh =document.querySelector(".refresh")
+const newGameButton =document.querySelector(".newGame")
 const tileLeftArea =document.getElementById("tileNumber")
 
 
 /*--------------------------General Vars ------------------------------*/
 let dragEnable = true;
 let discarCount =0;
-let tileLeft = (GameMatriz[0].length * GameMatriz[0].length)-1
+let tileLeft =(GameMatriz[0].length * GameMatriz[0].length)-1
 
 
 /*------------------Tile events Constructor------------------------------------------------------------------*/
@@ -69,6 +68,8 @@ function newTurn(){
 /*---------------------------Function to add listenerEvents to the boxes grid----------------------------------*/
 function boxListeners(){
 
+    const boxes = document.querySelectorAll(".box");
+
     boxes.forEach(box => {
         box.addEventListener("dragover", dragover)
         box.addEventListener("dragenter", dragenter)
@@ -78,13 +79,13 @@ function boxListeners(){
     });
 }
 
-/*----------------funcion para permitir el drag en las tarjetas-----------------*/
+/*----------------function to enable drag moves-----------------*/
 
 function enableDrag(){
     dragEnable = true;
 };     
 
-/*----------------------------funciones para descartar la mano-------------------*/
+/*----------------------------discard function-------------------*/
 
 function discartHand(){
     let handRemove = document.querySelectorAll(".card-zone .cards")
@@ -110,7 +111,7 @@ function eraseAviableSpaces(){
     })    
 }
 
-/*----------------Configuraciones para drag and drop carta en movimiento--------------------*/
+/*----------------configurations for drag and drop, for moving tiles--------------------*/
 
 function dragDropCard(e){    
 
@@ -125,7 +126,7 @@ function dragDropCard(e){
 eraseAviableSpaces()
 };
 
-/*-----------Configuraciones para drag and drop para las casillas del tablero----------*/
+/*-----------configurations for drag and drop for gameBoard Boxes----------*/
 
 function dragover(ActualElement){
     ActualElement.preventDefault();    
@@ -152,55 +153,37 @@ function drop(ActualElement){
         dragEnable=false;        
         updateMatriz(ActualElement)
         numberTileLeft();
+        showScoreData()
     }
 }
   
 
+/*---------------------------- listeners Zone--------------------------------*/
 
-
-
-/*----------------------------Zona de listeners--------------------------------*/
-
-
-
-discartCard.addEventListener("mouseenter",function(e){
-    const text=document.querySelector(".cementery p");
-    discartCard.style.backgroundColor="rgb(230, 12, 175)";
-    text.innerHTML="DESCARTAR <br/> MANO";
+buttonInstructions.addEventListener("click",e=>{
+    let instructionsPage = document.querySelector(".instruccions")
+    instructionsPage.style.visibility="visible"
 })
 
-discartCard.addEventListener("mouseleave",function(e){
-    const text=document.querySelector(".cementery p");
-    discartCard.style.backgroundColor="grey";
-    text.innerHTML="";
+buttonClose.addEventListener("click",e=>{
+    let instructionsPage = document.querySelector(".instruccions")
+    instructionsPage.style.visibility="hidden"
 })
 
-newCardTurn.addEventListener("mouseenter",function(e){
-    const text = document.querySelector(".newCard p")
-    newCardTurn.style.background="rgb(76, 184, 14)";
-    text.innerHTML="NUEVO <br/> TURNO";
-    
-})   
- 
-newCardTurn.addEventListener("mouseleave",function(e){
-    const text = document.querySelector(".newCard p");
-    newCardTurn.style.backgroundCol= "linear-gradient(143deg, rgba(134,64,0,1) 8%, rgba(212,64,0,1) 51%, rgba(255,122,0,1) 92%)"
-    text.innerHTML="NUEVO <br/> TURNO";
+newGameButton.addEventListener("click",e=>{
+    location.reload();
 })
 
-newCardTurn.addEventListener("click",e=>{
+buttonRefresh.addEventListener("click",e=>{
+    location.reload();
+})
+
+newCardTurn.addEventListener("click",e=>{    
+    endGameEvents()
     if(dragEnable===false){        
         newTurn();
         enableDrag();        
     }    
-})
-
-buttonScore.addEventListener("click",e=>{
-    e.preventDefault()
-    TotalScoreArea.innerHTML=scoreSystem()
-    movesAvailable()  
-   console.log(VerificarMOvimientosDisponibles())
-   eraseAviableSpaces()
 })
 
 discartCard.addEventListener("click",(e)=>{
@@ -211,12 +194,45 @@ discartCard.addEventListener("click",(e)=>{
     }    
 })
 
-/*---------------------------funcion de inicio------------------------------------------*/
+/*---------------------------Functions for place score in the front------------------------------------------*/
+function showScoreData(){
+
+    const TotalScoreArea =document.querySelectorAll(".scoreNumber")
+    let scoreValue =scoreSystem()
+    
+    TotalScoreArea.forEach(element => {
+        console.log(element)
+        element.innerHTML=`${scoreValue}`
+    }); 
+}
+
+
+
+/*---------------------------Functions for end game Events------------------------------------------*/
+function endGameEvents(){
+    let messageEndGame = document.getElementsByClassName("msgbox")[0]        
+    let msgEndGame =document.getElementById("MsgFinishGame")
+        
+    if(searchForSpacesAvailableInGrid()===false && discarCount<5){
+
+        msgEndGame.innerHTML="No more moves left </br> Game over!"
+        messageEndGame.style.visibility="visible";
+    }
+    
+    if(tileLeft===0){
+        
+            msgEndGame.innerHTML="No more tiles available </br> Game over!"
+            messageEndGame.style.visibility="visible";
+    };
+
+};
+
+/*---------------------------Game Star Functions------------------------------------------*/
 function newGame(){    
     
     boxListeners()
 
-    for(let i=1;i<=4;i++){
+    for(let i=1;i<=5;i++){
         newTurn();
         
     }
@@ -225,7 +241,8 @@ function newGame(){
     dragEnable=true; 
 }
 
-
-
- /*---------------------------iniciador de juego-------------------------------------*/
+ /*---------------------------Game Starter-------------------------------------*/
 newGame();
+
+
+

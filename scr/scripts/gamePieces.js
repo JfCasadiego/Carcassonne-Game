@@ -29,11 +29,11 @@ function newRandomPiece(){
             townCounter+=1
         };        
         
-        if(abbeyCounter ===15 && pieceClass!="Abbey"){
+        if(abbeyCounter >=15 && pieceClass!="Abbey"){
             pieceClass=Abbey;
             abbeyCounter=0
 
-       }else if(townCounter===5 && pieceClass!="Town"){
+       }else if(townCounter>=5 && pieceClass!="Town"){
            pieceClass=Town;
            townCounter=0
        }              
